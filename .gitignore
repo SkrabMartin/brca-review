@@ -1,0 +1,43 @@
+# Python environments, packaging, and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+# Credentials and machine-local configuration
+.env
+.env.*
+*.pem
+*.key
+.streamlit/secrets.toml
+# Downloads, generated databases, and outputs
+/data/
+/outputs/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.xml.gz
+*.txt.gz
+*.vcf.gz
+# Local agent instructions and internal planning (case insensitive)
+[aA][gG][eE][nN][tT][sS].[mM][dD]
+[aA][gG][eE][nN][tT].[mM][dD]
+[sS][kK][iI][lL][lL].[mM][dD]
+.[aA][gG][eE][nN][tT][sS]/
+.[cC][oO][dD][eE][xX]/
+[iI][nN][tT][eE][rR][nN][aA][lL]/
+[pP][lL][aA][nN][sS]/
+*[iI][nN][tT][eE][rR][nN][aA][lL]*.[mM][dD]
+[iI][dD][eE][aA].[mM][dD]
+[rR][oO][aA][dD][mM][aA][pP].[mM][dD]

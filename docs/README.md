@@ -15,3 +15,5 @@ belongs in this repository.
 - [PostgreSQL schema, migration/import workflow, and read-only API](storage.md).
 - [Pinned input artifact hashes](comparison-artifacts.json).
 - [React application containers and routing](frontend.md).
+
+- [Phase 4 provisional benchmark, protocol, empty observation templates and demo](validation/README.md): preparation only; no human pilot or clinical validation results.

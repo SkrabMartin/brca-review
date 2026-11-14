@@ -17,3 +17,9 @@ migrated/imported `brca_review_test_*` database, with `BRCA_TEST_DATABASE` match
 its name; see `docs/storage.md`. Without those dependencies/configuration these
 checks skip while the eight file-only tests remain runnable with `python3 -S`.
 Frontend behavior is covered by `cd frontend && corepack pnpm test`.
+
+Phase 4 standard-library tests in `test_validation.py` use explicitly synthetic
+responses to verify missing tasks, false positives/negatives, context errors,
+time-exclusion handling and comparison gates. `test_validation_reference.py`
+checks fixed case/task balance and that public templates contain no observations
+or invented pilot outcomes. These test scores are not reviewer results.

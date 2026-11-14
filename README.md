@@ -174,3 +174,30 @@ Internal planning, phase reports and agent instructions stay local regardless
 of capitalization. Stage public paths explicitly and inspect the index and all
 outgoing commits before any push. Raw data, generated output and credentials
 remain ignored; public documentation never links internal planning documents.
+
+## Phase 4 validation preparation
+
+A [provisional validation kit](docs/validation/README.md) now contains 16 public
+variants (eight per gene), 21 review tasks, independently re-extracted raw-source
+evidence, a reference sheet, a watchlist, header-only observation/review templates,
+a reproducible demo, and scoring tools. The reference was checked by the
+implementation agent; **independent clinical review is pending**.
+
+Human participants: **0**. There are no measured reviewer times or usefulness
+results. Both timing-comparison gates remain closed. The direct ClinVar website
+probe encountered a browser-verification page; historical task accessibility
+requires a qualified reviewer check. An archive-assisted control is separately
+named and must not be presented as direct web review. One source-condition scope
+challenge (Fanconi anemia) is explicitly flagged for inclusion review.
+
+```sh
+python3 scripts/build_validation_benchmark.py
+PYTHONPATH=src python3 scripts/verify_validation_app.py --base-url http://127.0.0.1:8091
+PYTHONPATH=src python3 scripts/score_validation.py --responses docs/validation/responses-template.csv --sessions docs/validation/sessions-template.csv --output outputs/validation/results.json
+```
+
+With empty templates, scoring returns `no_participant_data`, zero human
+participants and null timing/usefulness conclusions. Actual observations stay
+in ignored local `outputs/validation/`. See [pilot protocol](docs/validation/protocol.md)
+and [demo instructions](docs/validation/demo.md). Technical preparation is ready;
+Phase 4 remains open until independent review and a genuine reviewer pilot.

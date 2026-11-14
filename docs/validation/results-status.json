@@ -1,0 +1,13 @@
+{
+  "benchmark_id": "brca-2025-01-02_2025-02-06-v1",
+  "status": "no_participant_data",
+  "baseline": "clinvar_web",
+  "human_participant_count": 0,
+  "synthetic_participant_count": 0,
+  "independent_reference_review": "pending",
+  "usefulness_conclusion": null,
+  "results": [],
+  "paired": [],
+  "median_net_seconds_saved": null,
+  "warning": "Descriptive scoring against an agent-prepared reference; no clinical or reviewer-benefit conclusion. Do not mix direct-web and archive-assisted baselines. Missing/not-assessable tasks stay in accuracy/recall denominators."
+}

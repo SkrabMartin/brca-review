@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-11-14T06:15:22+00:00",
+  "archive_checks": [
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/archive/variant_summary_2025-01.txt.gz",
+      "method": "HEAD",
+      "pinned_bytes": 288267418,
+      "http_status": 200,
+      "content_length": "288267418",
+      "reachable": true
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/archive/variant_summary_2025-02.txt.gz",
+      "method": "HEAD",
+      "pinned_bytes": 334887755,
+      "http_status": 200,
+      "content_length": "334887755",
+      "reachable": true
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/archive/submission_summary_2025-01.txt.gz",
+      "method": "HEAD",
+      "pinned_bytes": 283755743,
+      "http_status": 200,
+      "content_length": "283755743",
+      "reachable": true
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/archive/submission_summary_2025-02.txt.gz",
+      "method": "HEAD",
+      "pinned_bytes": 297442974,
+      "http_status": 200,
+      "content_length": "297442974",
+      "reachable": true
+    }
+  ],
+  "web_probe": {
+    "url": "https://www.ncbi.nlm.nih.gov/clinvar/variation/91425/",
+    "scope": "one automated current-page probe; not a history audit",
+    "http_status": 200,
+    "challenge_detected": true,
+    "historical_values_verified": false
+  },
+  "clinvar_web_baseline_ready": false,
+  "archive_assisted_baseline_reachability": true,
+  "interpretation": "HTTP availability does not verify historical task coverage. Qualified reviewers must navigate and verify both dated values for every timed task before enabling a direct-ClinVar web comparison. An archive-assisted baseline is a separate comparison, not evidence against direct web review.",
+  "participant_observations": 0
+}

@@ -1,75 +1,176 @@
 # BRCA Review
 
-BRCA Review is a proposed bioinformatics application for clinical geneticists
-and variant curators reviewing changes in public ClinVar records for germline
-BRCA1 and BRCA2 variants associated with hereditary cancer predisposition.
-It will compare dated releases and show previous/current values, conditions,
-submitters where applicable, and traceable sources. Interpretation stays with
-the reviewer.
+BRCA Review helps clinical geneticists and variant curators review published
+changes in public ClinVar records for germline **BRCA1 and BRCA2** variants.
+It compares dated releases and preserves previous/current values, condition
+and submitter context where supported, and traceable source evidence.
+Interpretation stays with the reviewer.
 
-**Status:** Phase 0 repository foundation. No ingestion, comparison, database,
-or web interface is implemented. The first milestone is a reproducible BRCA1
-aggregate germline classification comparison before a web UI is built.
+**Status:** Phase 3 web MVP implemented: PostgreSQL persistence, Alembic
+migrations, a read-only API, and the React frontend. Both genes' aggregate
+snapshots are available; submission coverage is deliberately limited to **five
+source-verified SCV examples**. Clinical disease scope and reviewer usefulness
+are not validated. The separate standard-library comparison CLIs remain usable
+without PostgreSQL, web dependencies, or Node.
 
-ClinVar already offers [aggregate classification alerts](https://www.ncbi.nlm.nih.gov/clinvar/docs/alerts/);
-the added value of batch review and submission-level history is a hypothesis
-to test. Source data will be attributed to ClinVar.
+ClinVar already offers [aggregate classification alerts](https://www.ncbi.nlm.nih.gov/clinvar/docs/alerts/).
+The added value of batch review and submission context is a hypothesis to test.
+All biological record data are attributed to NCBI ClinVar. No patient records or
+user review decisions are accepted/stored by this MVP.
 
 ## Architecture
 
 ```text
-Dated public ClinVar releases
-  -> ingestion: explicit source manifest and snapshot extraction
-  -> comparison: deterministic old/new events by stable identifiers
-  -> storage: SQLite snapshots, relationships, provenance, and events
-  -> presentation: Streamlit batch review and variant details
+Dated public ClinVar TSV releases
+  -> ingestion: exact source hashes, headers, field mappings and row provenance
+  -> comparison: pure Python aggregate and condition-preserving SCV events
+  -> optional PostgreSQL storage: immutable snapshots, contexts and events
+  -> read-only Python HTTP API under /api/v1
+  -> React / TypeScript / Vite: batch public-ID review and source details
 ```
 
-Comparison will operate independently of SQLite and Streamlit so that it can
-run from a command line and be tested on small fixtures. Phase 0 provides only
-package boundaries; later components are planned below.
-
-| Phase | Components and locations |
+| Component | Location |
 | --- | --- |
-| 0: foundation | This README, packaging configuration, ignore rules, package skeleton |
-| 1: BRCA1 comparison | `src/brca_review/ingestion/`, `src/brca_review/comparison/`, future `src/brca_review/cli.py`, `tests/`, and `docs/` release manifest/verification log |
-| 2: BRCA2, conditions, submissions | Extend ingestion/comparison; future `src/brca_review/models.py`; matching fixtures in `tests/` and scope documentation in `docs/` |
-| 3: web MVP | Future `src/brca_review/storage/` for SQLite and root `app.py` for Streamlit; public-ID watchlist and detail views |
-| 4: validation/demo | Hand-checked public examples and evaluation in `docs/`, regression fixtures in `tests/`, reproducible run instructions here |
+| Dated sources and verification | `docs/`, `scripts/download_releases.py` |
+| File-only extraction/comparison | `src/brca_review/ingestion/`, `src/brca_review/comparison/` |
+| File-only CLIs | `src/brca_review/cli.py`, `src/brca_review/submission_cli.py` |
+| PostgreSQL/SQLAlchemy models and import | `src/brca_review/storage/` |
+| Alembic schema history | `alembic.ini`, `migrations/` |
+| Read-only HTTP adapter | `src/brca_review/web/` |
+| Public web frontend | `frontend/` |
+| Synthetic and optional PostgreSQL tests | `tests/` |
 
-Preserve stable ClinVar Variation IDs and VCV accession versions, raw values,
-both release dates, exact source filenames/URLs, and checksums. Later phases
-will retain RCV variant–condition relationships and individual SCV accessions,
-versions, condition identifiers, and submitter identifiers rather than flattening
-them into a single classification. Last-evaluated dates will remain distinct
-from the interval in which a change is observed. Missing records are explicit
-states, not inferred reclassifications. Field mappings and release availability
-must be verified against the actual dated files.
+The database stack follows BKP: **PostgreSQL 17, SQLAlchemy 2 with Psycopg 3
+(`postgresql+psycopg://`), Alembic, and Docker Compose**. BRCA Review uses its
+own database, configuration, credentials, network and volume. Its public
+frontend follows BKP's Node 24 / pnpm / React / TypeScript / Vite conventions.
+FastAPI provides the now-needed database read API; parsing and comparison never
+import it. Streamlit remains an optional future analytical view.
 
-See [data documentation](docs/README.md) and [test planning](tests/README.md).
-Downloaded releases belong in ignored `data/`; generated databases and outputs
-belong in ignored `outputs/`. Neither directory is needed for Phase 0.
+## File-only reproduction
 
-## Development
-
-Requires Python 3.11 or newer. To install the package skeleton locally:
+Requires Python 3.11+ and the standard library only. From the project root:
 
 ```sh
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -e .
-python -c "import brca_review"
+PYTHONPATH=src python3 scripts/download_releases.py
+PYTHONPATH=src python3 scripts/download_releases.py --manifest docs/submission-releases.json
+PYTHONPATH=src python3 -m brca_review.cli --manifest docs/releases.json --output outputs/brca1.csv
+PYTHONPATH=src python3 -m brca_review.cli --genes BRCA1 BRCA2 --manifest docs/releases.json --output outputs/brca1-brca2.csv
+PYTHONPATH=src python3 -m brca_review.submission_cli --output outputs/submissions-final.jsonl
+PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-There is no runnable comparison or demo yet. Runtime dependencies and commands
-will be added with their implementation phases. Agent instructions, credentials,
-and internal planning stay local. Stage public paths explicitly and inspect both
-the index and every commit to be pushed; stop publication if internal material
-appears. Planning documents remain local and are excluded regardless of filename capitalization.
+Downloads total approximately 1.2 GB compressed; allow additional disk/memory
+for outputs (the full SCV JSONL is about 284 MB). Sources are the actual archived
+publication dates **2025-01-02 → 2025-02-06**. Every downloaded input is checked
+against its compressed-byte SHA-256. Both file CLIs refuse incompatible headers
+and mismatched/nonchronological dates. Outputs sort deterministically and retain
+raw classification spelling, source URLs/hashes, dates, and line numbers.
 
-## Next implementation task
+- Original BRCA1 comparison: 46 changed, 12,591 unchanged, 104 newly observed,
+  2,229 unavailable. No missing/unresolved records in this pair.
+- BRCA1+BRCA2 aggregate union: 34,356 IDs; 113 changed, 31,633 unchanged,
+  352 newly observed, 2,258 unavailable.
+- Full SCV discovery: 111 same-context classification changes, 92 context
+  changes, 1,405 newly observed, 4,654 unavailable and 108,472 unchanged.
+  This discovery output is **not** all represented as verified web examples.
 
-Inspect official ClinVar archives and record two accessible dated releases in
-a source manifest. Check actual headers/schema versions and determine whether
-TSV supports the BRCA1 aggregate germline comparison; otherwise select compatible
-archived VCV XML. Do this before implementing a parser or UI.
+Re-running the same command to a second output and comparing with `cmp` verifies
+byte reproducibility. The original BRCA1 CLI output remains unchanged after the
+BRCA2/storage extensions. Synthetic tests are distinct from historical evidence.
+
+See [variant source mapping](docs/release-manifest.md), [variant manifest](docs/releases.json),
+[historical aggregate verification](docs/verification.md),
+[SCV semantics and commands](docs/submissions.md),
+[submission manifest](docs/submission-releases.json), and
+[historical SCV verification](docs/submission-verification.md).
+
+## Local PostgreSQL and migrations
+
+Copy [the placeholder environment](.env.example) to ignored `.env` and set a
+unique password; never reuse BKP credentials. PostgreSQL binds by default to
+`127.0.0.1:5433`, with database/role `brca_review`, project network
+`brca-review_default`, and volume `brca-review_postgres_data`.
+
+```sh
+test -f .env || cp .env.example .env
+# Edit .env before starting: replace the password placeholder.
+docker compose up -d --wait db
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-web.lock
+.venv/bin/python -m pip install --no-deps -e .
+set -a
+. ./.env
+set +a
+.venv/bin/python scripts/check_database.py
+.venv/bin/alembic upgrade head
+.venv/bin/alembic check
+.venv/bin/python -m brca_review.storage.importer
+```
+
+Prepare the file-only outputs first. The importer verifies pinned artifact
+hashes and independently checked SCV example fields; it imports all aggregate
+rows and only five verified SCV events/nine assertion snapshots. Re-importing
+the same immutable pair is a no-op. API startup never creates schema or imports
+data. See [storage and API documentation](docs/storage.md) for schema and tests.
+
+Changing initialization credentials in `.env` does not change an existing
+PostgreSQL volume's role/password. Stop with `docker compose stop db` or
+`docker compose down` to retain data. Do not remove the volume or run schema
+downgrades on data you need to keep. Downgrade tests use disposable databases.
+
+## Web MVP
+
+The UI retains its table-oriented design and adds actual loaded release-pair
+selection, both genes, public Variation ID/unversioned VCV watchlists (max 200),
+explicit invalid/duplicate/absent-ID feedback, classification/status filtering,
+pagination, filtered CSV export, and source detail. A separate verified-SCV
+section filters by condition, submitter, and event type and distinguishes
+release dates from assertion evaluation dates.
+
+```sh
+# Generate the original legacy snapshot assets once:
+PYTHONPATH=src python3 scripts/export_web_snapshot.py
+# Build both production images after preparing .env and the DB:
+docker compose -f compose.frontend.yaml build
+docker compose -f compose.frontend.yaml --profile tools run --rm migrate
+docker compose -f compose.frontend.yaml --profile tools run --rm importer
+docker compose -f compose.frontend.yaml up -d --wait api frontend
+curl -fsS http://127.0.0.1:8091/api/v1/health
+```
+
+Frontend: loopback **8091**, Nginx container **8080**. API: loopback **8093**,
+container **8000**. The external proxy can route all paths unchanged to the
+frontend; Nginx forwards relative `/api/v1/*` to the API internally. The old
+`/api/health` and snapshot downloads remain Phase 1 legacy resources; use
+`/api/v1/health` for PostgreSQL/import readiness. No CORS or private backend URL
+is required in browser code. PostgreSQL/API ports must not be published directly.
+
+For frontend development, `cd frontend`, run `corepack pnpm install --frozen-lockfile`,
+`corepack pnpm test`, `corepack pnpm build`, then `corepack pnpm dev`; start the
+API on loopback 8093 as described in [frontend deployment documentation](docs/frontend.md).
+Do not replace an existing public service while verifying a new local increment:
+use another Compose project and `BRCA_FRONTEND_PORT=8092` for an isolated preview.
+
+Application code is managed in `~/projects/brca-review` on `skrablinux`.
+Target public URL: `https://brca.skrabana.com`. Proxy, DNS, HTTPS and public
+rollout are owned by VPS Codex in `~/projects/VPS`.
+
+## Scope and next work
+
+Gene membership is not a clinically approved hereditary-cancer condition filter.
+Raw condition context is preserved without inferred ontology equivalence.
+Stable submitter IDs, VCV versions and SCV–RCV links absent from TSV stay null.
+No matching verified SCV is not evidence that all other submissions are unchanged.
+Current ClinVar links are navigation aids; historical evidence is the exact
+archived source. A string difference is not a diagnosis or an automatic clinical
+reclassification.
+
+Next is reviewer validation: a small hand-checked benchmark and a fair comparison
+of time/accuracy with direct ClinVar review. Clinical scope and usefulness remain
+open until that work is performed. No claim of clinical benefit is made.
+
+Internal planning, phase reports and agent instructions stay local regardless
+of capitalization. Stage public paths explicitly and inspect the index and all
+outgoing commits before any push. Raw data, generated output and credentials
+remain ignored; public documentation never links internal planning documents.

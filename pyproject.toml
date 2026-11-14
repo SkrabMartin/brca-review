@@ -10,5 +10,18 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.optional-dependencies]
+storage = [
+  "sqlalchemy>=2.0,<2.1",
+  "psycopg[binary]>=3.2,<4",
+  "alembic>=1.16,<2",
+]
+
+web = [
+  "sqlalchemy>=2.0,<2.1", "psycopg[binary]>=3.2,<4", "alembic>=1.16,<2",
+  "fastapi>=0.115,<1", "uvicorn[standard]>=0.35,<1",
+]
+test = ["httpx>=0.28,<1"]
+
 [tool.setuptools.packages.find]
 where = ["src"]

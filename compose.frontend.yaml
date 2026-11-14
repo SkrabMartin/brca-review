@@ -1,0 +1,46 @@
+# Application services; start the separate compose.yaml PostgreSQL service first.
+name: brca-review-frontend
+x-database-environment: &database-environment
+  BRCA_POSTGRES_HOST: db
+  BRCA_POSTGRES_PORT: "5432"
+  BRCA_POSTGRES_DB: ${BRCA_POSTGRES_DB:?Set BRCA_POSTGRES_DB}
+  BRCA_POSTGRES_USER: ${BRCA_POSTGRES_USER:?Set BRCA_POSTGRES_USER}
+  BRCA_POSTGRES_PASSWORD: ${BRCA_POSTGRES_PASSWORD:?Set BRCA_POSTGRES_PASSWORD}
+services:
+  api:
+    image: brca-review-api:local
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment: *database-environment
+    ports:
+      - "127.0.0.1:${BRCA_API_PORT:-8093}:8000"
+    networks: [default, database]
+    restart: unless-stopped
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "127.0.0.1:${BRCA_FRONTEND_PORT:-8091}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+  migrate:
+    image: brca-review-api:local
+    profiles: [tools]
+    environment: *database-environment
+    networks: [database]
+    command: ["alembic", "upgrade", "head"]
+  importer:
+    image: brca-review-api:local
+    profiles: [tools]
+    environment: *database-environment
+    networks: [database]
+    volumes:
+      - ./outputs:/input:ro
+    command: ["python", "-m", "brca_review.storage.importer", "--aggregate", "/input/brca1-brca2.csv", "--submissions", "/input/submissions-final.jsonl"]
+networks:
+  database:
+    external: true
+    name: brca-review_default

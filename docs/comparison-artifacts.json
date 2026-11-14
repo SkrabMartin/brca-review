@@ -1,0 +1,11 @@
+{
+  "comparison_id": "2025-01-02_2025-02-06",
+  "aggregate": {
+    "filename": "brca1-brca2.csv",
+    "sha256": "878430f1656274c22408428eb644b2df9a8381febd5fba1816b0a05eb802fe7f"
+  },
+  "submissions": {
+    "filename": "submissions-final.jsonl",
+    "sha256": "08099d0a5f3639151b3c80c043335dbbbfd6b8e0efbe007cd5f538d29eac3bd5"
+  }
+}

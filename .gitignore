@@ -15,6 +15,7 @@ dist/
 # Credentials and machine-local configuration
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 .streamlit/secrets.toml
@@ -41,3 +42,11 @@ dist/
 *[iI][nN][tT][eE][rR][nN][aA][lL]*.[mM][dD]
 [iI][dD][eE][aA].[mM][dD]
 [rR][oO][aA][dD][mM][aA][pP].[mM][dD]
+
+# Local phase completion reports (any capitalization, at any depth)
+[pP][hH][aA][sS][eE]*-[rR][eE][pP][oO][rR][tT].[mM][dD]
+
+# Frontend dependencies and generated public-data build artifacts
+node_modules/
+frontend/public/api/
+*.tsbuildinfo

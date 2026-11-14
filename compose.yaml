@@ -1,0 +1,22 @@
+name: brca-review
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${BRCA_POSTGRES_DB:?Set BRCA_POSTGRES_DB in .env}
+      POSTGRES_USER: ${BRCA_POSTGRES_USER:?Set BRCA_POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${BRCA_POSTGRES_PASSWORD:?Set BRCA_POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${BRCA_POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:

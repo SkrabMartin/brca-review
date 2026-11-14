@@ -1,11 +1,17 @@
 # Data and validation documentation
 
-Phase 1 will add `release-manifest.md`, recording actual release URLs, filenames,
-release and retrieval dates, checksums, schema versions, field mappings, and
-manual checks of one changed and one unchanged BRCA1 record. No release pair is
-verified yet.
+- [Pinned release metadata](releases.json): exact URLs, dates, sizes, SHA-256 hashes, and observed headers.
+- [Source selection and field mapping](release-manifest.md): TSV compatibility, comparison semantics, and scope limits.
+- [Historical verification](verification.md): changed/unchanged public records and reproducible full-release counts.
 
-Phase 2 will document condition scope and submission matching. Phase 4 will add
-a hand-checked benchmark, evaluation results, and reproducible demo instructions.
-Store raw downloads in ignored `data/` and generated results in ignored `outputs/`.
-Publish only deliberately reviewed public-ID examples; never include patient data.
+Raw downloads stay in ignored `data/`; generated results stay in ignored
+`outputs/`. SCV condition/source context is now retained by the file-only CLI; XML enrichment and clinical scope review remain open.
+Phase 4 will add a reviewer benchmark and demo instructions. No patient data
+belongs in this repository.
+
+- [SCV comparison semantics and reproduction](submissions.md).
+- [Pinned submission releases](submission-releases.json).
+- [Historical SCV verification](submission-verification.md) and [inspected example fields](submission-examples.json).
+- [PostgreSQL schema, migration/import workflow, and read-only API](storage.md).
+- [Pinned input artifact hashes](comparison-artifacts.json).
+- [React application containers and routing](frontend.md).

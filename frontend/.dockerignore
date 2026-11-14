@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.env
+.env.*
+*.log
+# Local planning/agent material never belongs in image build contexts.
+[aA][gG][eE][nN][tT][sS].[mM][dD]
+[aA][gG][eE][nN][tT].[mM][dD]
+[iI][dD][eE][aA].[mM][dD]
+[rR][oO][aA][dD][mM][aA][pP].[mM][dD]
+[pP][hH][aA][sS][eE]*-[rR][eE][pP][oO][rR][tT].[mM][dD]

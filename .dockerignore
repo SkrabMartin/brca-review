@@ -1,0 +1,14 @@
+# Default-deny application backend build context; no local documents/secrets/data.
+**
+!pyproject.toml
+!requirements-web.lock
+!README.md
+!src/
+!src/**
+!alembic.ini
+!migrations/
+!migrations/**
+!docs/
+!docs/*.json
+**/__pycache__/
+**/*.pyc

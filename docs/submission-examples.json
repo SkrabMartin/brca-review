@@ -1,0 +1,189 @@
+{
+  "submissions": {
+    "01": {
+      "SCV000030123": [
+        {
+          "line": 41759,
+          "#VariationID": "9317",
+          "SCV": "SCV000030123.2",
+          "ClinicalSignificance": "Pathogenic",
+          "SubmittedPhenotypeInfo": "BREAST-OVARIAN CANCER, FAMILIAL, SUSCEPTIBILITY TO, 2",
+          "ReportedPhenotypeInfo": "C2675520:Breast-ovarian cancer, familial, susceptibility to, 2",
+          "DateLastEvaluated": "Dec 21, 1995",
+          "Submitter": "OMIM"
+        }
+      ],
+      "SCV000296299": [
+        {
+          "line": 101628,
+          "#VariationID": "37574",
+          "SCV": "SCV000296299.2",
+          "ClinicalSignificance": "Pathogenic",
+          "SubmittedPhenotypeInfo": "OMIM:604370",
+          "ReportedPhenotypeInfo": "C2676676:Breast-ovarian cancer, familial, susceptibility to, 1",
+          "DateLastEvaluated": "Feb 24, 2015",
+          "Submitter": "Quest Diagnostics Nichols Institute San Juan Capistrano"
+        }
+      ],
+      "SCV000184021": [
+        {
+          "line": 250350,
+          "#VariationID": "91425",
+          "SCV": "SCV000184021.8",
+          "ClinicalSignificance": "Uncertain significance",
+          "SubmittedPhenotypeInfo": "MedGen:C0027672",
+          "ReportedPhenotypeInfo": "C0027672:Hereditary cancer-predisposing syndrome",
+          "DateLastEvaluated": "Oct 18, 2022",
+          "Submitter": "Ambry Genetics"
+        }
+      ],
+      "SCV000184222": [
+        {
+          "line": 377689,
+          "#VariationID": "141093",
+          "SCV": "SCV000184222.8",
+          "ClinicalSignificance": "Uncertain significance",
+          "SubmittedPhenotypeInfo": "MedGen:C0027672",
+          "ReportedPhenotypeInfo": "C0027672:Hereditary cancer-predisposing syndrome",
+          "DateLastEvaluated": "Nov 16, 2020",
+          "Submitter": "Ambry Genetics"
+        }
+      ]
+    },
+    "02": {
+      "SCV000030123": [
+        {
+          "line": 42752,
+          "#VariationID": "9317",
+          "SCV": "SCV000030123.2",
+          "ClinicalSignificance": "Pathogenic",
+          "SubmittedPhenotypeInfo": "BREAST-OVARIAN CANCER, FAMILIAL, SUSCEPTIBILITY TO, 2",
+          "ReportedPhenotypeInfo": "C2675520:Breast-ovarian cancer, familial, susceptibility to, 2",
+          "DateLastEvaluated": "Dec 21, 1995",
+          "Submitter": "OMIM"
+        }
+      ],
+      "SCV000296299": [
+        {
+          "line": 103536,
+          "#VariationID": "37574",
+          "SCV": "SCV000296299.3",
+          "ClinicalSignificance": "Pathogenic",
+          "SubmittedPhenotypeInfo": "not provided",
+          "ReportedPhenotypeInfo": "C3661900:not provided",
+          "DateLastEvaluated": "Nov 22, 2024",
+          "Submitter": "Quest Diagnostics Nichols Institute San Juan Capistrano"
+        }
+      ],
+      "SCV005437124": [
+        {
+          "line": 112216,
+          "#VariationID": "38235",
+          "SCV": "SCV005437124.1",
+          "ClinicalSignificance": "Pathogenic",
+          "SubmittedPhenotypeInfo": "OMIM:612555",
+          "ReportedPhenotypeInfo": "C2675520:Breast-ovarian cancer, familial, susceptibility to, 2",
+          "DateLastEvaluated": "Dec 16, 2024",
+          "Submitter": "KCCC/NGS Laboratory, Kuwait Cancer Control Center"
+        }
+      ],
+      "SCV000184021": [
+        {
+          "line": 253494,
+          "#VariationID": "91425",
+          "SCV": "SCV000184021.9",
+          "ClinicalSignificance": "Likely benign",
+          "SubmittedPhenotypeInfo": "MedGen:C0027672",
+          "ReportedPhenotypeInfo": "C0027672:Hereditary cancer-predisposing syndrome",
+          "DateLastEvaluated": "Nov 26, 2024",
+          "Submitter": "Ambry Genetics"
+        }
+      ],
+      "SCV000184222": [
+        {
+          "line": 382191,
+          "#VariationID": "141093",
+          "SCV": "SCV000184222.9",
+          "ClinicalSignificance": "Likely benign",
+          "SubmittedPhenotypeInfo": "MedGen:C0027672",
+          "ReportedPhenotypeInfo": "C0027672:Hereditary cancer-predisposing syndrome",
+          "DateLastEvaluated": "Oct 02, 2024",
+          "Submitter": "Ambry Genetics"
+        }
+      ]
+    }
+  },
+  "aggregates": {
+    "01": [
+      {
+        "line": 99662,
+        "VariationID": "91425",
+        "GeneSymbol": "BRCA2",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh37"
+      },
+      {
+        "line": 99663,
+        "VariationID": "91425",
+        "GeneSymbol": "BRCA2",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh38"
+      },
+      {
+        "line": 144934,
+        "VariationID": "141093",
+        "GeneSymbol": "BRCA1",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh37"
+      },
+      {
+        "line": 144935,
+        "VariationID": "141093",
+        "GeneSymbol": "BRCA1",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh38"
+      }
+    ],
+    "02": [
+      {
+        "line": 99799,
+        "VariationID": "91425",
+        "GeneSymbol": "BRCA2",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh37"
+      },
+      {
+        "line": 99800,
+        "VariationID": "91425",
+        "GeneSymbol": "BRCA2",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh38"
+      },
+      {
+        "line": 145075,
+        "VariationID": "141093",
+        "GeneSymbol": "BRCA1",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh37"
+      },
+      {
+        "line": 145076,
+        "VariationID": "141093",
+        "GeneSymbol": "BRCA1",
+        "ClinicalSignificance": "Conflicting classifications of pathogenicity",
+        "Assembly": "GRCh38"
+      }
+    ]
+  },
+  "verification_date": "2026-11-13",
+  "verified_by": "implementation agent; not independent clinical review",
+  "expected_events": {
+    "SCV000030123": "unchanged",
+    "SCV000184021": "classification_changed",
+    "SCV000184222": "classification_changed",
+    "SCV000296299": "context_changed",
+    "SCV005437124": "newly_observed"
+  },
+  "submission_manifest": "submission-releases.json",
+  "variant_manifest": "releases.json"
+}
